@@ -85,21 +85,22 @@ router.post(
 );
 
 
-router.get('/:studentId', authMiddleware, async (req, res) => {
+// Remove the 'authMiddleware' from this route
+router.get("/:studentId", async (req, res) => {
   try {
     const { studentId } = req.params;
 
-    // Find the student's profile
     const profile = await StudentProfile.findOne({ studentId });
 
     if (!profile) {
-      return res.status(404).json({ msg: 'Profile not found' });
+      return res.status(404).json({ msg: "Profile not found" });
     }
 
     res.status(200).json(profile);
   } catch (error) {
-    console.error('Error fetching profile:', error);
-    res.status(500).send('Server error');
+    console.error("Error fetching profile:", error);
+    res.status(500).send("Server error");
   }
 });
+
 module.exports = router;
